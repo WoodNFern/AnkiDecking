@@ -5,9 +5,8 @@ import xml.sax
 import sys
 import wikitextparser as wtp
 
-RELEVANT_SECTIONS = tuple(['Adjective', 'Adverb', 'Conjunction', 'Determiner', 'Etymology', 'Interjection', 'Noun',
-                    'Number', 'Numeral', 'Ordinal number', 'Particle', 'Postposition', 'Preposition', 'Pronoun',
-                    'Verb'])
+RELEVANT_SECTIONS = tuple(['Adjective', 'Adverb', 'Conjunction', 'Determiner', 'Interjection', 'Noun', 'Number',
+                    'Numeral', 'Ordinal number', 'Particle', 'Postposition', 'Preposition', 'Pronoun', 'Verb'])
 IRRELEVANT_SECTIONS = tuple(['Abbreviations', 'Alternative forms', 'Anagrams', 'Antonyms', 'Compounds', 'Conjugation',
                         'Contraction', 'Coordinate terms', 'Declension', 'Derived terms', 'Descendants',
                         'External links', 'Further reading', 'Hypernyms', 'Hyponyms', 'Idiom', 'Idioms', 'Inflection',
@@ -70,7 +69,9 @@ class CardDataGenerator(xml.sax.ContentHandler):
             for section in parsed_page.sections
             if section.title == self.target_language
         ][0]
-        subsections = wtp.parse(target_lang_section).get_sections(include_subsections=False)
+        subsections = wtp.parse(target_lang_section).get_sections(include_subsections=False, level=3) \
+                    + wtp.parse(target_lang_section).get_sections(include_subsections=False, level=4)
+
 
         # Relevant subsections containing translations
         relevant_sections = [
@@ -79,11 +80,9 @@ class CardDataGenerator(xml.sax.ContentHandler):
             if section.title is not None and section.title.startswith(RELEVANT_SECTIONS)
         ]
 
-        # Retrieve parts-of-speech sections nested in 'Etymology' sections
-
-        # Process remaining parts-of-speech sections
-
         print("Word: " + self.title)
+        print(str(relevant_sections))
+
 
 
 def generate_card_data(dictionary_filename, output_filename, target_language):
