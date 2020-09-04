@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
 
-"""
-Parse a XML wiktionary dump using a SAX parser (humongous file!).
-Produces another XML files containing only the english words
-with their id and the full text.
-"""
 import argparse
 import xml.sax
 import codecs
