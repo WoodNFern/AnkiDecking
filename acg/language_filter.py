@@ -93,6 +93,25 @@ class LanguageFilter(xml.sax.ContentHandler):
         if self.in_page and name == "text":
             self.in_text = False
 
+def read_frequency_list(frequency_file):
+    """
+    Read a word frequency file and return a dictionary mapping word to their
+    rank.
+    """
+    frequency_list = {}
+    with open(frequency_file, "r", encoding="utf-8") as freq_file:
+        for line in freq_file.readlines():
+            (rank, word, part_of_speech) = line.strip().split(',')
+            frequency_list[word] = int(rank)
+    return frequency_list
+
+def filter_wiki_dump(wiki_dump_file, output_file, target_language):
+    with open(output_file, "w", encoding="utf-8") as output_file:
+        with open(wiki_dump_file, "r") as wiki_dump_file:
+            output_file.write("<dictionary>\n")
+            xml.sax.parse(wiki_dump_file, LanguageFilter(output_file, frequency_list, target_language))
+            output_file.write("</dictionary>\n")
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Filter word entries from a Wiktionary dump by language.')
     parser.add_argument('--target-language', '-l', type=str,
@@ -112,15 +131,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Read the frequency list to filter the words
-    frequency_list = {}
-    with open(args.frequency_file, "r", encoding="utf-8") as freq_file:
-        for line in freq_file.readlines():
-            (rank, word, part_of_speech) = line.strip().split(',')
-            frequency_list[word] = False
+    frequency_list = read_frequency_list(args.frequency_file)
 
     # Read & filter the Wiktionary dump
-    with open(args.output_file, "w", encoding="utf-8") as output_file:
-        with open(args.wiki_dump_file, "r") as wiki_dump_file:
-            output_file.write("<dictionary>\n")
-            xml.sax.parse(wiki_dump_file, LanguageFilter(output_file, frequency_list, args.target_language))
-            output_file.write("</dictionary>\n")
+    filter_wiki_dump(args.wiki_dump_file, args.output_file, args.target_language)
