@@ -2,6 +2,7 @@
 
 import argparse
 import xml.sax
+import re
 import sys
 import wikitextparser as wtp
 
@@ -12,6 +13,7 @@ IRRELEVANT_SECTIONS = tuple(['Abbreviations', 'Alternative forms', 'Anagrams', '
                         'External links', 'Further reading', 'Hypernyms', 'Hyponyms', 'Idiom', 'Idioms', 'Inflection',
                         'Participle', 'Phrases', 'Pronunciation', 'Proverbs', 'Quotations', 'References',
                         'Related terms', 'See also', 'Synonyms', 'Usage notes'])
+IRRELEVANT_TEMPLATE_NAMES = tuple(['cln', 'definition', ' for', 'n-g', ' of', 'onlyusedin', 'q', 'taxlink'])
 
 class CardDataGenerator(xml.sax.ContentHandler):
 
@@ -30,6 +32,18 @@ class CardDataGenerator(xml.sax.ContentHandler):
         self.id = None
         self.title = None
         self.text = None
+
+        self._init_regex_patterns()
+
+    def _init_regex_patterns(self):
+        """
+        Initializes RegEx patterns for Wiki template processing
+        """
+        self.parenthesized_remark_pattern = re.compile(r"{{m\|.*\|(.*)\|\|(.*)}}")
+        self.combining_parenthesizing_template_pattern = re.compile(r"{{(lb|label)\|[^\|\}]*\|([^\}]*)}}")
+        self.omitting_template_pattern = re.compile(r"{{.*}}")
+        self.parenthesizing_template_pattern = re.compile(r"{{(gloss|qualifier|qual)\|(.*)}}")
+        self.unchanged_text_template_pattern = re.compile(r"{{(w|vern|l)\|(?:[^\}]*\|)?([^\}]*)}}")
 
     def startElement(self, name, attrs):
         if name == "entry":
