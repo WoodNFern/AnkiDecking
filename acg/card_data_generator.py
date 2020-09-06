@@ -160,7 +160,9 @@ class TemplateProcessor():
 
     @staticmethod
     def process_link_template(t_args: str):
-        return '(l)'
+        splits = re.split(r'\|+', t_args)
+
+        return splits[-1]
 
     @staticmethod
     def process_qualifier_template(t_args: str):
