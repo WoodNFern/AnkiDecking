@@ -33,18 +33,6 @@ class CardDataGenerator(xml.sax.ContentHandler):
         self.title = None
         self.text = None
 
-        self._init_regex_patterns()
-
-    def _init_regex_patterns(self):
-        """
-        Initializes RegEx patterns for Wiki template processing
-        """
-        self.parenthesized_remark_pattern = re.compile(r"{{m\|.*\|(.*)\|\|(.*)}}")
-        self.combining_parenthesizing_template_pattern = re.compile(r"{{(lb|label)\|[^\|\}]*\|([^\}]*)}}")
-        self.omitting_template_pattern = re.compile(r"{{.*}}")
-        self.parenthesizing_template_pattern = re.compile(r"{{(gloss|qualifier|qual)\|(.*)}}")
-        self.unchanged_text_template_pattern = re.compile(r"{{(w|vern|l)\|(?:[^\}]*\|)?([^\}]*)}}")
-
     def startElement(self, name, attrs):
         if name == "entry":
             self.in_entry = True
@@ -98,26 +86,8 @@ class CardDataGenerator(xml.sax.ContentHandler):
         for pos_section in relevant_sections:
             items = [ wtp.WikiText(def_item) for def_list in pos_section.get_lists() for def_item in def_list.items ]
             formatted_items = [ item.plain_text(replace_templates=False).strip() for item in items ]
-            templated_items = self._replace_templates(formatted_items)
+            templated_items = [ TemplateProcessor.process_templates(formatted_item) for formatted_item in formatted_items ]
             print("%s (%s): %s" % (self.title, pos_section.title, str(templated_items)))
-
-    def _replace_templates(self, items):
-        # Subsitute templates, which produce argument text as result
-        replaced_items = [ re.sub(self.unchanged_text_template_pattern, r'\2', item) for item in items]
-
-        # Subsitute templates, which produce parenthesized text as result
-        parenthesized_items = [ re.sub(self.parenthesizing_template_pattern, r'(\2)', item) for item in replaced_items]
-
-        # Substitute remark templates with explanations in postposed parantheses
-        remark_items = [ re.sub(self.parenthesized_remark_pattern, r'\1 ("\2")', item) for item in parenthesized_items]
-
-        # Substitute patterns generating parenthesized lists
-        fully_parenthesized_items = [ re.sub(self.combining_parenthesizing_template_pattern, r'(\2)', item) for item in remark_items]
-
-        # Remove remaining templates
-        cleaned_items = [ re.sub(self.omitting_template_pattern, '', item) for item in fully_parenthesized_items ]
-
-        return cleaned_items
 
 
 class TemplateProcessor():
