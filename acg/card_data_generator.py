@@ -130,7 +130,8 @@ class TemplateProcessor():
         if m:
             template_type = m.group(1)
             template_args = m.group(2)
-            processed_text = TemplateProcessor.process_specific_template(template_type, template_args)
+            processed_template = TemplateProcessor.process_specific_template(template_type, template_args)
+            processed_text = processed_text[:m.start()] + processed_template + processed_text[m.end():]
         return processed_text
 
     @staticmethod
