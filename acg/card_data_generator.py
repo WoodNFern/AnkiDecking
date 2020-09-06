@@ -164,7 +164,7 @@ class TemplateProcessor():
 
     @staticmethod
     def process_qualifier_template(t_args: str):
-        return '(gloss)'
+        return '(%s)' % t_args
 
     @staticmethod
     def process_label_template(t_args: str):
