@@ -170,7 +170,9 @@ class TemplateProcessor():
 
     @staticmethod
     def process_label_template(t_args: str):
-        return '(label)'
+        splits = re.split(r'\|+', t_args)[1:]
+        label = ', '.join(splits)
+        return '(%s)' % label
 
     @staticmethod
     def process_misc_template(t_args: str):
