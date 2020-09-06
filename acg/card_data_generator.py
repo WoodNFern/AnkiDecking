@@ -120,6 +120,52 @@ class CardDataGenerator(xml.sax.ContentHandler):
         return cleaned_items
 
 
+class TemplateProcessor():
+
+    @staticmethod
+    def process_templates(wiki_text: str):
+        processed_text = wiki_text
+        p = re.compile(r"{{([^\|]*)\|(.*)}}")
+        m = p.search(wiki_text)
+        if m:
+            template_type = m.group(1)
+            template_args = m.group(2)
+            processed_text = TemplateProcessor.process_specific_template(template_type, template_args)
+        return processed_text
+
+    @staticmethod
+    def process_specific_template(t_type: str, t_args: str):
+        if t_type == 'm':
+            return TemplateProcessor.process_remark_template(t_args)
+        elif t_type in ['w', 'l', 'vern']:
+            return TemplateProcessor.process_link_template(t_args)
+        elif t_type in ['gloss', 'qualifier', 'qual']:
+            return TemplateProcessor.process_qualifier_template(t_args)
+        elif t_type in ['lb', 'label']:
+            return TemplateProcessor.process_label_template(t_args)
+        else:
+            return TemplateProcessor.process_misc_template(t_args)
+
+    @staticmethod
+    def process_remark_template(t_args: str):
+        return '(m)'
+
+    @staticmethod
+    def process_link_template(t_args: str):
+        return '(l)'
+
+    @staticmethod
+    def process_qualifier_template(t_args: str):
+        return '(gloss)'
+
+    @staticmethod
+    def process_label_template(t_args: str):
+        return '(label)'
+
+    @staticmethod
+    def process_misc_template(t_args: str):
+        return '(misc)'
+
 
 def generate_card_data(dictionary_filename, output_filename, target_language):
     with open(dictionary_filename, "r", encoding="utf-8") as dic_file:
