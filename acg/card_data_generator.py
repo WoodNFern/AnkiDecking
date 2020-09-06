@@ -150,7 +150,13 @@ class TemplateProcessor():
 
     @staticmethod
     def process_remark_template(t_args: str):
-        return '(m)'
+        splits = re.split(r'\|+', t_args)
+
+        remark = splits[1]
+        if len(splits) == 3:
+            remark += ' ("' + splits[2] + '")'
+
+        return remark
 
     @staticmethod
     def process_link_template(t_args: str):
