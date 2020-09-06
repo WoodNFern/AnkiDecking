@@ -126,12 +126,13 @@ class TemplateProcessor():
     def process_templates(wiki_text: str):
         processed_text = wiki_text
         p = re.compile(r"{{([^\|]*)\|(.*)}}")
-        m = p.search(wiki_text)
-        if m:
+        m = p.search(processed_text)
+        while m:
             template_type = m.group(1)
             template_args = m.group(2)
             processed_template = TemplateProcessor.process_specific_template(template_type, template_args)
             processed_text = processed_text[:m.start()] + processed_template + processed_text[m.end():]
+            m = p.search(processed_text)
         return processed_text
 
     @staticmethod
