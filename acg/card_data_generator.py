@@ -13,7 +13,6 @@ IRRELEVANT_SECTIONS = tuple(['Abbreviations', 'Alternative forms', 'Anagrams', '
                         'External links', 'Further reading', 'Hypernyms', 'Hyponyms', 'Idiom', 'Idioms', 'Inflection',
                         'Participle', 'Phrases', 'Pronunciation', 'Proverbs', 'Quotations', 'References',
                         'Related terms', 'See also', 'Synonyms', 'Usage notes'])
-IRRELEVANT_TEMPLATE_NAMES = tuple(['cln', 'definition', ' for', 'n-g', ' of', 'onlyusedin', 'q', 'taxlink'])
 
 class CardDataGenerator(xml.sax.ContentHandler):
 
@@ -133,54 +132,69 @@ class TemplateProcessor():
 
     @staticmethod
     def process_specific_template(t_type: str, t_args: str):
-        if t_type == 'm':
-            return TemplateProcessor.process_remark_template(t_args)
-        elif t_type in ['w', 'l', 'vern']:
-            return TemplateProcessor.process_link_template(t_args)
-        elif t_type in ['gloss', 'qualifier', 'qual']:
-            return TemplateProcessor.process_qualifier_template(t_args)
+        if t_type in ['m', 'mention']:
+            return TemplateProcessor.unchanged_text_with_opt_remark(t_args)
+        elif t_type in ['l', 'link']:
+            return TemplateProcessor.get_second_arg(t_args)
         elif t_type in ['lb', 'label']:
-            return TemplateProcessor.process_label_template(t_args)
+            return TemplateProcessor.paranthesized_comma_list(t_args)
+        elif t_type in ['gloss', 'qualifier', 'qual', 'q']:
+            return TemplateProcessor.parenthesized_arg(t_args)
+        elif t_type in ['taxlink', 'w', 'n-g', 'non-gloss definition', 'vern']:
+            return TemplateProcessor.get_first_arg(t_args)
+        elif any(particle in t_type for particle in ['for', 'form']) :
+            return TemplateProcessor.leave_marked(t_type, t_args)
+        elif t_type in ['cln']:
+            return TemplateProcessor.omit_template()
         else:
-            return TemplateProcessor.process_misc_template(t_args)
+            return TemplateProcessor.omit_template()
 
     @staticmethod
-    def process_remark_template(t_args: str):
+    def unchanged_text_with_opt_remark(t_args: str):
+        """
+        Produces the unprocessed mention from the first argument and appends an
+        optional further remark in quotes and parentheses from the second
+        argument, if present.
+        """
         splits = re.split(r'\|+', t_args)
 
-        remark = splits[1]
+        mention = splits[1]
         if len(splits) == 3:
-            remark += ' ("' + splits[2] + '")'
+            mention += ' ("' + splits[2] + '")'
 
-        return remark
-
-    @staticmethod
-    def process_link_template(t_args: str):
-        splits = re.split(r'\|+', t_args)
-
-        return splits[-1]
+        return mention
 
     @staticmethod
-    def process_qualifier_template(t_args: str):
-        return '(%s)' % t_args
-
-    @staticmethod
-    def process_label_template(t_args: str):
-        splits = re.split(r'\|+', t_args)[1:]
-        label = ', '.join(splits)
-        return '(%s)' % label
-
-    @staticmethod
-    def substitute_with_first_arg(t_args: str):
-        """
-        Substitutes the template text with the first argument in 't_args'.
-        """
+    def get_first_arg(t_args: str):
         splits = re.split(r'\|+', t_args)
 
         return splits[0]
 
     @staticmethod
-    def leave_unprocessed(t_type: str, t_args: str):
+    def get_second_arg(t_args: str):
+        splits = re.split(r'\|+', t_args)
+
+        return splits[1]
+
+    @staticmethod
+    def parenthesized_arg(t_args: str):
+        """
+        Returns the provided arguments unchanged, put between parantheses.
+        """
+        return '(%s)' % t_args
+
+    @staticmethod
+    def paranthesized_comma_list(t_args: str):
+        """
+        Produces a comma seperated list of all arguments but the first one,
+        which is a language specifier, in parantheses.
+        """
+        splits = re.split(r'\|+', t_args)[1:]
+        label = ', '.join(splits)
+        return '(%s)' % label
+
+    @staticmethod
+    def leave_marked(t_type: str, t_args: str):
         """
         Leave template marked to be detected later on such that the whole
         containing translation can be deleted instead of merely removing the
