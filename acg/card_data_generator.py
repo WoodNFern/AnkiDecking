@@ -102,7 +102,7 @@ class TemplateProcessor():
             # Extract template information
             start_index, end_index = t_coordinates.pop(0)
             m = p.search(processed_text[start_index:end_index])
-            t_type, t_args = m.group(1), m.group(2)
+            t_type, t_args = (m.group(1), m.group(2)) if m else ('', '')
 
             # Substitute template with processed text
             processed_template = TemplateProcessor.process_specific_template(t_type, t_args)
