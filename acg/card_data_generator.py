@@ -2,6 +2,7 @@
 
 import argparse
 import xml.sax
+import re
 import sys
 import wikitextparser as wtp
 
@@ -87,17 +88,20 @@ class CardDataGenerator(xml.sax.ContentHandler):
         ]
 
         # Extract & format definition
+        p = re.compile(r"^.*\$\$[^\{\}]*\$\$.*$")
         for pos_section in relevant_sections:
             items = [ wtp.WikiText(def_item) for def_list in pos_section.get_lists() for def_item in def_list.items ]
             formatted_items = [ item.plain_text(replace_templates=False).strip() for item in items ]
-            templated_items = [ tp.process_templates(formatted_item) for formatted_item in formatted_items ]
-            entries.append(Card(self.title, pos_section.title, templated_items))
+            processed_items = [ tp.process_templates(formatted_item) for formatted_item in formatted_items ]
+            cleaned_items = [ processed_item.strip() for processed_item in processed_items if not p.match(processed_item)]
+            entries.append(Card(self.title, pos_section.title, cleaned_items))
 
         return entries
 
     def _save(self, entries: List[Card]):
         for entry in entries:
-            self.output_file.write(str(entry) + ',\n')
+            if entry.definitions:
+                self.output_file.write(str(entry) + ',\n')
 
 
 def generate_card_data(dictionary_filename, output_filename, target_language):
