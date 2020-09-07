@@ -96,13 +96,19 @@ class TemplateProcessor():
     def process_templates(wiki_text: str):
         processed_text = wiki_text
         p = re.compile(r"{{([^\|]*?)\|(.*?)}}")
-        m = p.search(processed_text)
-        while m:
-            template_type = m.group(1)
-            template_args = m.group(2)
-            processed_template = TemplateProcessor.process_specific_template(template_type, template_args)
-            processed_text = processed_text[:m.start()] + processed_template + processed_text[m.end():]
-            m = p.search(processed_text)
+        t_coordinates = TemplateProcessor.detect_template_coordinates(processed_text)
+
+        while t_coordinates:
+            # Extract template information
+            start_index, end_index = t_coordinates.pop(0)
+            m = p.search(processed_text[start_index:end_index])
+            t_type, t_args = m.group(1), m.group(2)
+
+            # Substitute template with processed text
+            processed_template = TemplateProcessor.process_specific_template(t_type, t_args)
+            processed_text = processed_text[:start_index] + processed_template + processed_text[end_index:]
+            t_coordinates = TemplateProcessor.detect_template_coordinates(processed_text)
+
         return processed_text
 
     @staticmethod
@@ -116,7 +122,7 @@ class TemplateProcessor():
                 stack.append(i)
             elif wiki_text[i:i+2] == '}}':
                 start_index = stack.pop()
-                end_index = i + 1
+                end_index = i + 2
                 t_coordinates.append((start_index, end_index))
                 i += 1  # next character is already processed -> skip
             else:
@@ -124,7 +130,6 @@ class TemplateProcessor():
             i += 1
 
         return t_coordinates
-
 
     @staticmethod
     def process_specific_template(t_type: str, t_args: str):
