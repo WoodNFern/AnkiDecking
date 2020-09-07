@@ -171,9 +171,30 @@ class TemplateProcessor():
         return '(%s)' % label
 
     @staticmethod
-    def process_misc_template(t_args: str):
-        return '(misc)'
+    def substitute_with_first_arg(t_args: str):
+        """
+        Substitutes the template text with the first argument in 't_args'.
+        """
+        splits = re.split(r'\|+', t_args)
 
+        return splits[0]
+
+    @staticmethod
+    def leave_unprocessed(t_type: str, t_args: str):
+        """
+        Leave template marked to be detected later on such that the whole
+        containing translation can be deleted instead of merely removing the
+        template.
+        """
+        return '$$' + t_type + '|' + t_args + '$$'
+
+    @staticmethod
+    def omit_template():
+        """
+        Omit unknown templates with the assumption that new templates are not
+        going to introduce fundamental new information.
+        """
+        return ''
 
 def generate_card_data(dictionary_filename, output_filename, target_language):
     with open(dictionary_filename, "r", encoding="utf-8") as dic_file:
