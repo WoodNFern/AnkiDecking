@@ -106,6 +106,27 @@ class TemplateProcessor():
         return processed_text
 
     @staticmethod
+    def detect_template_coordinates(wiki_text: str):
+        t_coordinates = []
+        stack = []
+
+        i = 0
+        while i < len(wiki_text) - 1:
+            if wiki_text[i:i+2] == '{{':
+                stack.append(i)
+            elif wiki_text[i:i+2] == '}}':
+                start_index = stack.pop()
+                end_index = i + 1
+                t_coordinates.append((start_index, end_index))
+                i += 1  # next character is already processed -> skip
+            else:
+                pass
+            i += 1
+
+        return t_coordinates
+
+
+    @staticmethod
     def process_specific_template(t_type: str, t_args: str):
         if t_type == 'm':
             return TemplateProcessor.process_remark_template(t_args)
