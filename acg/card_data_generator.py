@@ -5,7 +5,9 @@ import xml.sax
 import sys
 import wikitextparser as wtp
 
+from data.card import Card
 from template_processor import TemplateProcessor as tp
+from typing import List
 
 RELEVANT_SECTIONS = tuple(['Adjective', 'Adverb', 'Conjunction', 'Determiner', 'Interjection', 'Noun', 'Number',
                     'Numeral', 'Ordinal number', 'Particle', 'Postposition', 'Preposition', 'Pronoun', 'Verb'])
@@ -54,7 +56,8 @@ class CardDataGenerator(xml.sax.ContentHandler):
 
     def endElement(self, name):
         if name == "entry":
-            self._process()
+            entries = self._process()
+            self._save(entries)
         if self.in_entry and name == "title":
             self.in_title = False
         if self.in_entry and name == "id":
@@ -64,6 +67,7 @@ class CardDataGenerator(xml.sax.ContentHandler):
 
     def _process(self):
         parsed_page = wtp.parse(self.text)
+        entries = []
 
         # Only use contents of target language
         target_lang_section = [
@@ -87,14 +91,21 @@ class CardDataGenerator(xml.sax.ContentHandler):
             items = [ wtp.WikiText(def_item) for def_list in pos_section.get_lists() for def_item in def_list.items ]
             formatted_items = [ item.plain_text(replace_templates=False).strip() for item in items ]
             templated_items = [ tp.process_templates(formatted_item) for formatted_item in formatted_items ]
-            print("%s (%s): %s" % (self.title, pos_section.title, str(templated_items)))
+            entries.append(Card(self.title, pos_section.title, templated_items))
+
+        return entries
+
+    def _save(self, entries: List[Card]):
+        for entry in entries:
+            self.output_file.write(str(entry) + ',\n')
+
 
 def generate_card_data(dictionary_filename, output_filename, target_language):
     with open(dictionary_filename, "r", encoding="utf-8") as dic_file:
         with open(output_filename, "w", encoding="utf-8") as output_file:
-            output_file.write("<dictionary>\n")
+            output_file.write("[\n")
             xml.sax.parse(dic_file, CardDataGenerator(output_file, target_language))
-            output_file.write("</dictionary>\n")
+            output_file.write("]\n")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Filter word entries from a Wiktionary dump by language.')
