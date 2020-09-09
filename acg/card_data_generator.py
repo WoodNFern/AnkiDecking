@@ -10,12 +10,6 @@ from data.card import Card
 from template_processor import TemplateProcessor as tp
 from typing import List
 
-IRRELEVANT_SECTIONS = tuple(['Abbreviations', 'Alternative forms', 'Anagrams', 'Antonyms', 'Compounds', 'Conjugation',
-                        'Contraction', 'Coordinate terms', 'Declension', 'Derived terms', 'Descendants',
-                        'External links', 'Further reading', 'Hypernyms', 'Hyponyms', 'Idiom', 'Idioms', 'Inflection',
-                        'Participle', 'Phrases', 'Pronunciation', 'Proverbs', 'Quotations', 'References',
-                        'Related terms', 'See also', 'Synonyms', 'Usage notes'])
-
 class CardDataGenerator(xml.sax.ContentHandler):
 
     def __init__(self, output_file, target_language = 'English'):
