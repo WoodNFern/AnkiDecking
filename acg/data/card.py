@@ -1,5 +1,6 @@
 import json
 
+from anki.notes import Note
 from typing import List
 
 class Card():
@@ -8,6 +9,22 @@ class Card():
         self.word = word
         self.pos = pos
         self.definitions = definitions
+
+    def fill_into_note(self, note: Note):
+        note['Front'] = self.word
+        note['Back'] = self.parsed_definitions()
+        return note
+
+    def parsed_definitions(self):
+        definitions = self.definitions
+        parsed_string = "<ul>\n"
+
+        for definition in definitions:
+            if len(definition) > 0:
+                parsed_string += "<li>%s</li>\n" % definition
+
+        parsed_string += "</ul>"
+        return parsed_string
 
     @staticmethod
     def from_json(json_obj: dict):
