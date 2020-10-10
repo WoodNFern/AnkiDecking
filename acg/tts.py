@@ -30,7 +30,7 @@ def synthesize_text(text: str, filename: str, language_code: str = 'fi-FI'):
     )
 
     # The response's audio_content is binary.
-    with open(filename + ".mp3", "wb") as out:
+    with open("resources/tts/" + filename + ".mp3", "wb") as out:
         out.write(response.audio_content)
 
 
