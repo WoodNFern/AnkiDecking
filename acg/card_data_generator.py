@@ -162,8 +162,9 @@ if __name__ == "__main__":
                     default='filtered_dictionary.xml',
                     help='Filtered excerpt of Wiktionary dump.')
     parser.add_argument('--output-file', '-o', type=str,
-                    default='filtered_dictionary.xml',
-                    help='Filtered excerpt of Wiktionary dump.')
+                    default='card_data.json',
+                    help='Processed entry data containing definitions & further information about words in\
+                    JSON format.')
     args = parser.parse_args()
 
     # Read & filter the Wiktionary dump
