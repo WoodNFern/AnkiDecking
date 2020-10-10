@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
 import argparse
+import json
 
+from data.card import Card
 from google.cloud import texttospeech
 
 def synthesize_text(text: str, filename: str, language_code: str = 'fi-FI'):
@@ -33,11 +35,38 @@ def synthesize_text(text: str, filename: str, language_code: str = 'fi-FI'):
     with open("resources/tts/" + filename + ".mp3", "wb") as out:
         out.write(response.audio_content)
 
+def synthesize_dictionary(json_path: str):
+    """
+    Parse the contents of the JSON document containing the card data
+    and synthesize each 'word' element in it.
+
+    :param json_path: the file path of the JSON document file
+    """
+    with open(json_path, 'r') as f:
+        json_content = f.read()
+        doc = json.loads(json_content)
+
+        for entry in [ Card.from_json(json_obj) for json_obj in list(doc) ]:
+            if entry.has_definitions():
+                synthesize_text(entry.word, entry.word)
+            else:
+                continue
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--text", help="The text from which to synthesize speech.", required=True)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument("--text", "-t",
+        help="The text from which to synthesize speech.")
+    group.add_argument("--json-file", "-j",
+        help="JSON file containing data with which to create cards")
 
     args = parser.parse_args()
 
-    synthesize_text(args.text, args.text)
+    if args.text:
+        synthesize_text(args.text, args.text)
+    else:
+        synthesize_dictionary(args.json_file)
