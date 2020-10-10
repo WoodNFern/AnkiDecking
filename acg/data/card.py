@@ -1,9 +1,11 @@
 import json
 
 from anki.notes import Note
-from typing import List
+from typing import List, Final
 
 class Card():
+
+    WIKI_LINK_TEMPLATE: Final = "https://en.wiktionary.org/wiki/%s#Finnish"
 
     def __init__(self, word: str, pos: str, definitions: List[str]):
         self.word = word
@@ -13,6 +15,7 @@ class Card():
     def fill_into_note(self, note: Note):
         note['Front'] = self.word
         note['Back'] = self.parsed_definitions()
+        note['WikiLink'] = Card.WIKI_LINK_TEMPLATE % self.word
         return note
 
     def has_definitions(self):
