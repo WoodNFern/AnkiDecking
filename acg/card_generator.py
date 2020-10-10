@@ -60,7 +60,6 @@ if __name__ == '__main__':
     collection.decks.select(deck['id'])
     collection.decks.current()['mid'] = model['id']
 
-    print(str(model))
     # Load JSON into collection
     fill(collection, deck, json_file)
 
