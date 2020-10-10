@@ -15,6 +15,9 @@ class Card():
         note['Back'] = self.parsed_definitions()
         return note
 
+    def has_definitions(self):
+        return any(definition for definition in self.definitions)
+
     def parsed_definitions(self):
         definitions = self.definitions
         parsed_string = "<ul>\n"

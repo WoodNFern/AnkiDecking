@@ -25,11 +25,14 @@ def fill(collection: Collection, deck: Deck, json_path: str):
         doc = json.loads(json_content)
 
         for entry in [ Card.from_json(json_obj) for json_obj in list(doc) ]:
-            empty_note = collection.newNote()
-            empty_note.model()['did'] = deck['id']
-            filled_note = entry.fill_into_note(empty_note)
+            if entry.has_definitions():
+                empty_note = collection.newNote()
+                empty_note.model()['did'] = deck['id']
+                filled_note = entry.fill_into_note(empty_note)
 
-            collection.add_note(filled_note, deck['id'])
+                collection.add_note(filled_note, deck['id'])
+            else:
+                continue
 
 
 if __name__ == '__main__':
