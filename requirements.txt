@@ -1,3 +1,4 @@
+anki==2.1.34
+google-cloud-texttospeech==2.2.0
 setuptools>=36.2.1
 wikitextparser
-anki==2.1.34
