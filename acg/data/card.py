@@ -16,7 +16,7 @@ class Card():
     def fill_into_note(self, note: Note):
         note['Front'] = self.word
         note['Back'] = self.parsed_definitions()
-        note['Rank'] = self.rank
+        note['Rank'] = str(self.rank)
         note['WikiLink'] = Card.WIKI_LINK_TEMPLATE % self.word
         return note
 
