@@ -5,10 +5,11 @@ import xml.sax
 import codecs
 import sys
 
+from typing import TextIO
 
 class LanguageFilter(xml.sax.ContentHandler):
 
-    def __init__(self, output_file, frequency_list = None, target_language = 'English'):
+    def __init__(self, output_file: TextIO, frequency_list: dict = {}, target_language: str = 'English'):
         xml.sax.ContentHandler.__init__(self)
         self.output_file = output_file
         self.frequency_list = frequency_list
@@ -50,11 +51,13 @@ class LanguageFilter(xml.sax.ContentHandler):
 
     def _append_word(self):
         self.filtered_words += 1
-        if self.frequency_list:
-            self.frequency_list[self.title] = True
+        rank, pos = self.frequency_list.get(self.title, (None, None))
+
         self.output_file.write("  <entry>\n")
         self.output_file.write("    <id>%s</id>\n" % self.id)
         self.output_file.write("    <title>%s</title>\n" % self.title)
+        self.output_file.write("    <pos>%s</pos>\n" % pos)
+        self.output_file.write("    <rank>%s</rank>\n" % rank)
         self.output_file.write("    <text xml:space=\"preserve\"><![CDATA[\n")
         self.output_file.write("%s\n" % self.text)
         self.output_file.write("    ]]></text>\n")
@@ -88,7 +91,7 @@ class LanguageFilter(xml.sax.ContentHandler):
         if self.in_page and name == "text":
             self.in_text = False
 
-def read_frequency_list(frequency_file):
+def read_frequency_list(frequency_file: str) -> dict:
     """
     Read a word frequency file and return a dictionary mapping word to their
     rank.
@@ -97,10 +100,10 @@ def read_frequency_list(frequency_file):
     with open(frequency_file, "r", encoding="utf-8") as freq_file:
         for line in freq_file.readlines():
             (rank, word, part_of_speech) = line.strip().split(',')
-            frequency_list[word] = int(rank)
+            frequency_list[word] = (int(rank), part_of_speech)
     return frequency_list
 
-def filter_wiki_dump(wiki_dump_file, output_file, target_language):
+def filter_wiki_dump(wiki_dump_file: str, frequency_list: dict, output_file: str, target_language: str):
     with open(output_file, "w", encoding="utf-8") as output_file:
         with open(wiki_dump_file, "r") as wiki_dump_file:
             output_file.write("<dictionary>\n")
@@ -129,4 +132,4 @@ if __name__ == "__main__":
     frequency_list = read_frequency_list(args.frequency_file)
 
     # Read & filter the Wiktionary dump
-    filter_wiki_dump(args.wiki_dump_file, args.output_file, args.target_language)
+    filter_wiki_dump(args.wiki_dump_file, frequency_list, args.output_file, args.target_language)

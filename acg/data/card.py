@@ -7,14 +7,16 @@ class Card():
 
     WIKI_LINK_TEMPLATE: Final = "https://en.wiktionary.org/wiki/%s#Finnish"
 
-    def __init__(self, word: str, pos: str, definitions: List[str]):
+    def __init__(self, word: str, pos: str, rank: int, definitions: List[str]):
         self.word = word
         self.pos = pos
+        self.rank = rank
         self.definitions = definitions
 
     def fill_into_note(self, note: Note):
         note['Front'] = self.word
         note['Back'] = self.parsed_definitions()
+        note['Rank'] = self.rank
         note['WikiLink'] = Card.WIKI_LINK_TEMPLATE % self.word
         return note
 
@@ -36,9 +38,10 @@ class Card():
     def from_json(json_obj: dict):
         word = json_obj['word']
         pos = json_obj['pos']
+        rank = json_obj['rank']
         definitions = json_obj['definitions']
 
-        return Card(word, pos, definitions)
+        return Card(word, pos, rank, definitions)
 
     def __repr__(self):
         return json.dumps(self.__dict__, separators=(',', ': '), indent=4)

@@ -21,11 +21,15 @@ class CardDataGenerator(xml.sax.ContentHandler):
         self.in_entry = False
         self.in_id = False
         self.in_title = False
+        self.in_pos = False
+        self.in_rank = False
         self.in_text = False
 
         # Variables to hold information about the processed element
         self.id = None
         self.title = None
+        self.pos = None
+        self.rank = None
         self.text = None
 
     def startElement(self, name, attrs):
@@ -35,6 +39,10 @@ class CardDataGenerator(xml.sax.ContentHandler):
             self.in_id = True
         if self.in_entry and name == "title":
             self.in_title = True
+        if self.in_entry and name == "pos":
+            self.in_pos = True
+        if self.in_entry and name == "rank":
+            self.in_rank = True
         if self.in_entry and name == "text":
             self.in_text = True
             self.text = ""
@@ -44,6 +52,10 @@ class CardDataGenerator(xml.sax.ContentHandler):
             self.title = content
         elif self.in_id:
             self.id = content
+        elif self.in_pos:
+            self.pos = content
+        elif self.in_rank:
+            self.rank = int(content)
         elif self.in_text:
             self.text += content
 
@@ -55,6 +67,10 @@ class CardDataGenerator(xml.sax.ContentHandler):
             self.in_title = False
         if self.in_entry and name == "id":
             self.in_id = False
+        if self.in_pos and name == "pos":
+            self.in_pos = False
+        if self.in_rank and name == "rank":
+            self.in_rank = False
         if self.in_entry and name == "text":
             self.in_text = False
 
@@ -73,7 +89,7 @@ class CardDataGenerator(xml.sax.ContentHandler):
         relevant_sections = CardDataGenerator._filter_pos_sections(subsections)
 
         # Extract & format definitions
-        cards = CardDataGenerator._generate_cards(self.title, relevant_sections)
+        cards = CardDataGenerator._generate_cards(self.title, self.rank, relevant_sections)
 
         return cards
 
@@ -112,7 +128,7 @@ class CardDataGenerator(xml.sax.ContentHandler):
         return relevant_sections
 
     @staticmethod
-    def _generate_cards(src_word: str, subsections: List[wtp.Section]) -> List[Card]:
+    def _generate_cards(src_word: str, word_rank: int, subsections: List[wtp.Section]) -> List[Card]:
         """
         Extract relevant definitions from a part-of-speech section and format
         them appropriately for further processing.
@@ -134,7 +150,7 @@ class CardDataGenerator(xml.sax.ContentHandler):
             cleaned_items = [ processed_item.strip() for processed_item in processed_items if not p.match(processed_item)]
 
             # Generate Card
-            entries.append(Card(src_word, pos_section.title, cleaned_items))
+            entries.append(Card(src_word, pos_section.title, word_rank, cleaned_items))
 
         return entries
 
