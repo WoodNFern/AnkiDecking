@@ -23,12 +23,13 @@ def fill(collection: Collection, deck: Deck, json_path: str):
     with open(json_path, 'r') as f:
         json_content = f.read()
         doc = json.loads(json_content)
+        cards = [ Card.from_json(json_obj) for json_obj in list(doc) ]
 
-        for entry in [ Card.from_json(json_obj) for json_obj in list(doc) ]:
-            if entry.has_definitions():
+        for card in sorted(cards, key=lambda card: card.rank):
+            if card.has_definitions():
                 empty_note = collection.newNote()
                 empty_note.model()['did'] = deck['id']
-                filled_note = entry.fill_into_note(empty_note)
+                filled_note = card.fill_into_note(empty_note)
 
                 collection.add_note(filled_note, deck['id'])
             else:
