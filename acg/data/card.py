@@ -25,13 +25,13 @@ class Card():
 
     def parsed_definitions(self):
         definitions = self.definitions
-        parsed_string = "<ul>\n"
+        parsed_string = "<ol>\n"
 
         for definition in definitions:
             if len(definition) > 0:
                 parsed_string += "<li>%s</li>\n" % definition
 
-        parsed_string += "</ul>"
+        parsed_string += "</ol>"
         return parsed_string
 
     @staticmethod
