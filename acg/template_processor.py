@@ -48,7 +48,7 @@ class TemplateProcessor():
         elif t_type in ['l', 'link']:
             return TemplateProcessor.get_second_arg(t_args)
         elif t_type in ['lb', 'label']:
-            return TemplateProcessor.paranthesized_comma_list(t_args)
+            return TemplateProcessor.omit_template()
         elif t_type in ['gloss', 'qualifier', 'qual', 'q']:
             return TemplateProcessor.parenthesized_arg(t_args)
         elif t_type in ['taxlink', 'w', 'n-g', 'non-gloss definition', 'vern']:
@@ -93,16 +93,6 @@ class TemplateProcessor():
         Returns the provided arguments unchanged, put between parantheses.
         """
         return '(%s)' % t_args
-
-    @staticmethod
-    def paranthesized_comma_list(t_args: str):
-        """
-        Produces a comma seperated list of all arguments but the first one,
-        which is a language specifier, in parantheses.
-        """
-        splits = re.split(r'\|+', t_args)[1:]
-        label = ', '.join(splits)
-        return '(%s)' % label
 
     @staticmethod
     def leave_marked(t_type: str, t_args: str):
