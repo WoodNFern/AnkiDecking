@@ -128,6 +128,12 @@ class CardDataGenerator(xml.sax.ContentHandler):
         return relevant_sections
 
     @staticmethod
+    def _add_parenthesed_styling(line: str):
+        return line\
+            .replace('(', '<span class="parenthesed">(')\
+            .replace(')', ')</span>')
+
+    @staticmethod
     def _generate_cards(src_word: str, word_rank: int, subsections: List[wtp.Section]) -> List[Card]:
         """
         Extract relevant definitions from a part-of-speech section and format
@@ -149,8 +155,11 @@ class CardDataGenerator(xml.sax.ContentHandler):
             # Clean up unwanted definitions
             cleaned_items = [ processed_item.strip() for processed_item in processed_items if not p.match(processed_item)]
 
+            # Allow for differentiated styling of remarks in parentheses for readability
+            finalized_items = [ CardDataGenerator._add_parenthesed_styling(cleaned_item) for cleaned_item in cleaned_items ]
+
             # Generate Card
-            entries.append(Card(src_word, pos_section.title, word_rank, cleaned_items))
+            entries.append(Card(src_word, pos_section.title, word_rank, finalized_items))
 
         return entries
 
