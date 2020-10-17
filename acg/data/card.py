@@ -18,6 +18,7 @@ class Card():
         note['Back'] = self.parsed_definitions()
         note['Rank'] = str(self.rank)
         note['WikiLink'] = Card.WIKI_LINK_TEMPLATE % self.word
+        note['Audio'] = "[sound:%s.mp3]" % self.word
         return note
 
     def has_definitions(self):
