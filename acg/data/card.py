@@ -16,7 +16,7 @@ class Card():
     def fill_into_note(self, note: Note):
         note['Front'] = self.word
         note['PartOfSpeech'] = self.pos
-        note['Back'] = self.parsed_definitions()
+        note['Back'] = Card.parsed_definitions(self.get_first_few_definitions())
         note['Rank'] = str(self.rank)
         note['WikiLink'] = Card.WIKI_LINK_TEMPLATE % self.word
         note['Audio'] = "[sound:%s.mp3]" % self.word
@@ -25,8 +25,8 @@ class Card():
     def has_definitions(self):
         return any(definition for definition in self.definitions)
 
-    def parsed_definitions(self):
-        definitions = self.definitions
+    @staticmethod
+    def parsed_definitions(definitions: List[str]):
         parsed_string = "<ol>\n"
 
         for definition in definitions:
@@ -35,6 +35,14 @@ class Card():
 
         parsed_string += "</ol>"
         return parsed_string
+
+    def get_first_few_definitions(self):
+        """
+        Selects a limited number of definitions to avoid information overload.
+        """
+        count = len(self.definitions)
+        max_count = min(3, int(count / 2))
+        return self.definitions[:max_count]
 
     @staticmethod
     def from_json(json_obj: dict):
