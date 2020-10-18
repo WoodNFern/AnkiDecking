@@ -139,6 +139,7 @@ class CardDataGenerator(xml.sax.ContentHandler):
         Extract relevant definitions from a part-of-speech section and format
         them appropriately for further processing.
         """
+        # Detect remains of templates whose definitions should be deleted completely
         p = re.compile(r"^.*\$\$[^\{\}]*\$\$.*$")
         entries = []
 
