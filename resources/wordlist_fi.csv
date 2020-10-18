@@ -1,25 +1,25 @@
 1,olla,verb
-2,ja,conjuction
+2,ja,conjunction
 3,ei,verb
 4,se,pronoun
-5,että,conjuction
+5,että,conjunction
 6,joka,pronoun
 7,vuosi,noun
 8,hän,pronoun
 9,myös,adverb
 10,saada,verb
-11,mutta,conjuction
+11,mutta,conjunction
 12,tämä,pronoun
 13,voida,verb
 14,tulla,verb
 15,suomi,proper noun
 16,tehdä,verb
-17,kun,conjuction
+17,kun,conjunction
 18,pitää,verb
 19,mukaan,preposition
 20,uusi,adjective
 21,jo,adverb
-22,kuin,conjuction
+22,kuin,conjunction
 23,hyvä,adjective
 24,ne,pronoun
 25,sanoa,verb
@@ -28,18 +28,18 @@
 28,nyt,adverb
 29,suuri,adjective
 30,kertoa,verb
-31,tai,conjuction
+31,tai,conjunction
 32,vain,adverb
 33,paljon,adverb
 34,muu,pronoun
 35,vielä,adverb
 36,niin,adverb
 37,oma,adjective
-38,sekä,conjuction
+38,sekä,conjunction
 39,mikä,pronoun
 40,maa,noun
 41,kaksi,numeral
-42,jos,conjuction
+42,jos,conjunction
 43,asia,noun
 44,yksi,numeral
 45,viime,adjective
@@ -76,7 +76,7 @@
 76,eikä,verb
 77,mm,abbreviation
 78,päästä,verb
-79,vaikka,conjuction
+79,vaikka,conjunction
 80,lapsi,noun
 81,päivä,noun
 82,hallitus,noun
@@ -89,7 +89,7 @@
 89,ensi,adjective
 90,kunta,noun
 91,toinen,numeral
-92,sillä,conjuction
+92,sillä,conjunction
 93,joutua,verb
 94,käyttää,verb
 95,tampere,proper noun
@@ -100,10 +100,10 @@
 100,viikko,noun
 101,esimerkiksi,adverb
 102,lähteä,verb
-103,eli,conjuction
+103,eli,conjunction
 104,tarvita,verb
 105,yli,adverb
-106,koska,conjuction
+106,koska,conjunction
 107,venäjä,proper noun
 108,turku,proper noun
 109,luku,noun
@@ -121,7 +121,7 @@
 121,tärkeä,adjective
 122,alku,noun
 123,paikka,noun
-124,vaan,conjuction
+124,vaan,conjunction
 125,tilanne,noun
 126,presidentti,noun
 127,tieto,noun
@@ -246,7 +246,7 @@
 246,kyllä,adverb
 247,lisätä,verb
 248,sunnuntai,noun
-249,kuten,conjuction
+249,kuten,conjunction
 250,taas,adverb
 251,sarja,noun
 252,perjantai,noun
@@ -441,7 +441,7 @@
 441,juha,proper noun
 442,koulutus,noun
 443,lisää,adverb
-444,jotta,conjuction
+444,jotta,conjunction
 445,miljoona,noun
 446,selvä,adjective
 447,puolestaan,adverb
@@ -604,7 +604,7 @@
 604,kanta,noun
 605,nopea,adjective
 606,opiskelija,noun
-607,vai,conjuction
+607,vai,conjunction
 608,tavata,verb
 609,kannalta,preposition
 610,huomata,verb
@@ -743,7 +743,7 @@
 743,sekunti,noun
 744,lopulta,adverb
 745,onni,noun
-746,mikäli,conjuction
+746,mikäli,conjunction
 747,parantaa,verb
 748,luonto,noun
 749,valta,noun
@@ -1017,7 +1017,7 @@
 1017,eilen,adverb
 1018,harri,proper noun
 1019,hieno,adjective
-1020,ennen_kuin,conjuction
+1020,ennen_kuin,conjunction
 1021,työtön,noun
 1022,ilma,noun
 1023,new,proper noun
@@ -1086,7 +1086,7 @@
 1086,luovuttaa,verb
 1087,pentti,proper noun
 1088,myönteinen,adjective
-1089,joko,conjuction
+1089,joko,conjunction
 1090,kylmä,adjective
 1091,numero,noun
 1092,vanhus,noun
@@ -1239,7 +1239,7 @@
 1239,samaan_aikaan,adverb
 1240,väri,noun
 1241,lentää,verb
-1242,niinkuin,conjuction
+1242,niinkuin,conjunction
 1243,valvoa,verb
 1244,jää,noun
 1245,piha,noun
@@ -1580,7 +1580,7 @@
 1580,tasainen,adjective
 1581,maine,noun
 1582,lauri,proper noun
-1583,silloin_kun,conjuction
+1583,silloin_kun,conjunction
 1584,kiire,noun
 1585,luonnehtia,verb
 1586,katto,noun
@@ -1765,7 +1765,7 @@
 1765,iloinen,adjective
 1766,rauma,proper noun
 1767,tähdätä,verb
-1768,kunnes,conjuction
+1768,kunnes,conjunction
 1769,reijo,proper noun
 1770,osittain,adverb
 1771,väyrynen,proper noun
@@ -2068,7 +2068,7 @@
 2068,opiskelu,noun
 2069,kai,adverb
 2070,hakemus,noun
-2071,paitsi,conjuction
+2071,paitsi,conjunction
 2072,haitata,verb
 2073,kulutus,noun
 2074,kauppias,noun
@@ -2273,7 +2273,7 @@
 2273,olennainen,adjective
 2274,kyyti,noun
 2275,lahja,noun
-2276,myös,conjuction
+2276,myös,conjunction
 2277,päälle,adverb
 2278,harjoittelu,noun
 2279,latvia,proper noun
@@ -2528,7 +2528,7 @@
 2528,taiteellinen,adjective
 2529,eija,proper noun
 2530,hallussa,preposition
-2531,kun_taas,conjuction
+2531,kun_taas,conjunction
 2532,poikkeuksellisen,adverb
 2533,teettää,verb
 2534,putki,noun
@@ -2748,7 +2748,7 @@
 2748,cd,abbreviation
 2749,esiintyminen,noun
 2750,heidi,proper noun
-2751,joskin,conjuction
+2751,joskin,conjunction
 2752,kainuu,proper noun
 2753,oikeuttaa,verb
 2754,yleisurheilu,noun
@@ -2906,7 +2906,7 @@
 2906,ajoneuvo,noun
 2907,myrsky,noun
 2908,lempäälä,proper noun
-2909,mutta_jos,conjuction
+2909,mutta_jos,conjunction
 2910,haavoittua,verb
 2911,norjalainen,noun
 2912,kerho,noun
@@ -2931,7 +2931,7 @@
 2931,kirsti,proper noun
 2932,minne,adverb
 2933,ammattikorkeakoulu,noun
-2934,että_kun,conjuction
+2934,että_kun,conjunction
 2935,kiihtyä,verb
 2936,nimitys,noun
 2937,päämäärä,noun
@@ -3177,7 +3177,7 @@
 3177,niska,noun
 3178,epävarmuus,noun
 3179,normaali,noun
-3180,sen_jälkeen_kun,conjuction
+3180,sen_jälkeen_kun,conjunction
 3181,ennen_muuta,adverb
 3182,peruskorjaus,noun
 3183,reuna,noun
@@ -3263,7 +3263,7 @@
 3263,neuvo,noun
 3264,keli,noun
 3265,välissä,preposition
-3266,samalla_kun,conjuction
+3266,samalla_kun,conjunction
 3267,jännitys,noun
 3268,puheenjohtajakausi,noun
 3269,sillanpää,proper noun
@@ -3817,7 +3817,7 @@
 3817,kohdistaa,verb
 3818,kompromissi,noun
 3819,mirja,proper noun
-3820,toisin_kuin,conjuction
+3820,toisin_kuin,conjunction
 3821,perään,preposition
 3822,nelonen,noun
 3823,ongelmallinen,adjective
@@ -3840,7 +3840,7 @@
 3840,paasio,proper noun
 3841,jakautua,verb
 3842,tosi,adjective
-3843,vasta_kun,conjuction
+3843,vasta_kun,conjunction
 3844,vanha,proper noun
 3845,tauno,proper noun
 3846,eteneminen,noun
@@ -3927,7 +3927,7 @@
 3927,maata,verb
 3928,mieliä,verb
 3929,ottaminen,noun
-3930,heti_kun,conjuction
+3930,heti_kun,conjunction
 3931,laadukas,adjective
 3932,paikoin,adverb
 3933,temppu,noun
@@ -4212,7 +4212,7 @@
 4212,helpottua,verb
 4213,natura,proper noun
 4214,luxemburg,proper noun
-4215,niin_kauan_kuin,conjuction
+4215,niin_kauan_kuin,conjunction
 4216,sisar,noun
 4217,tamminen,proper noun
 4218,kontakti,noun
@@ -4355,7 +4355,7 @@
 4355,terveysministeriö,noun
 4356,perusteellinen,adjective
 4357,egypti,proper noun
-4358,kuin_mitä,conjuction
+4358,kuin_mitä,conjunction
 4359,määräaika,noun
 4360,pussi,noun
 4361,igor,proper noun
@@ -4406,7 +4406,7 @@
 4406,oikeusministeri,noun
 4407,jääskeläinen,proper noun
 4408,kuulustelu,noun
-4409,niin,conjuction
+4409,niin,conjunction
 4410,rautatie,noun
 4411,toimeentulo,noun
 4412,ylilääkäri,noun
@@ -4503,7 +4503,7 @@
 4503,metsätalous,noun
 4504,nykyisellään,adverb
 4505,täydellisesti,adverb
-4506,ilman_että,conjuction
+4506,ilman_että,conjunction
 4507,valtti,noun
 4508,viehättää,verb
 4509,yksityistäminen,noun
@@ -4771,7 +4771,7 @@
 4771,torni,noun
 4772,virolainen,proper noun
 4773,backman,proper noun
-4774,siinä_missä,conjuction
+4774,siinä_missä,conjunction
 4775,tiainen,proper noun
 4776,lakiesitys,noun
 4777,puuhata,verb
@@ -5029,7 +5029,7 @@
 5029,rauta,noun
 5030,senaatti,noun
 5031,tippua,verb
-5032,aina_kun,conjuction
+5032,aina_kun,conjunction
 5033,blues,noun
 5034,virheellinen,adjective
 5035,huoneisto,noun
@@ -5457,7 +5457,7 @@
 5457,harry,proper noun
 5458,kinkku,noun
 5459,pesäpallo,noun
-5460,varsinkin_kun,conjuction
+5460,varsinkin_kun,conjunction
 5461,aidosti,adverb
 5462,kilpailuvirasto,noun
 5463,tuotekehitys,noun
@@ -5497,7 +5497,7 @@
 5497,pääsarja,noun
 5498,tyystin,adverb
 5499,fyysisesti,adverb
-5500,ennenkuin,conjuction
+5500,ennenkuin,conjunction
 5501,lähipäivä,noun
 5502,tapani,proper noun
 5503,kide,noun
@@ -6143,7 +6143,7 @@
 6143,arvostelija,noun
 6144,kynä,noun
 6145,maineikas,adjective
-6146,nyt_kun,conjuction
+6146,nyt_kun,conjunction
 6147,psyykkinen,adjective
 6148,väkevä,adjective
 6149,hyvinvointivaltio,noun
@@ -6625,7 +6625,7 @@
 6625,ensikertalainen,adjective
 6626,jätehuolto,noun
 6627,kateus,noun
-6628,per,conjuction
+6628,per,conjunction
 6629,pikkukaupunki,noun
 6630,pirkka,proper noun
 6631,rohjeta,verb
@@ -7339,7 +7339,7 @@
 7339,käsiksi,adverb
 7340,pauliina,proper noun
 7341,ratas,noun
-7342,saati,conjuction
+7342,saati,conjunction
 7343,skotti,noun
 7344,taidetoimikunta,noun
 7345,teräs,noun
@@ -7550,7 +7550,7 @@
 7550,viljo,proper noun
 7551,viranhaltija,noun
 7552,vuokko,proper noun
-7553,ynnä,conjuction
+7553,ynnä,conjunction
 7554,korvaaminen,noun
 7555,piakkoin,adverb
 7556,rikosilmoitus,noun
@@ -8182,7 +8182,7 @@
 8182,mustavalkoinen,adjective
 8183,närhi,proper noun
 8184,ruohonen,proper noun
-8185,toisin_sanoen,conjuction
+8185,toisin_sanoen,conjunction
 8186,täysosuma,noun
 8187,bo,proper noun
 8188,havu,proper noun
@@ -8286,7 +8286,7 @@
 8286,huijata,verb
 8287,hyötykäyttö,noun
 8288,ko,adverb
-8289,niin_myös,conjuction
+8289,niin_myös,conjunction
 8290,nurmela,proper noun
 8291,parlamentaarinen,adjective
 8292,pidellä,verb
@@ -8760,7 +8760,7 @@
 8760,fredrik,proper noun
 8761,hajanainen,adjective
 8762,hytönen,proper noun
-8763,joskaan,conjuction
+8763,joskaan,conjunction
 8764,kotilainen,proper noun
 8765,kuluttajahinta,noun
 8766,noita,noun
@@ -9121,7 +9121,7 @@
 9121,kolari,proper noun
 9122,riistää,verb
 9123,syrjäseutu,noun
-9124,taikka,conjuction
+9124,taikka,conjunction
 9125,tuskailla,verb
 9126,vesialue,noun
 9127,värvätä,verb
