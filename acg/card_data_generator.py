@@ -89,7 +89,7 @@ class CardDataGenerator(xml.sax.ContentHandler):
         relevant_sections = CardDataGenerator._filter_pos_sections(subsections)
 
         # Extract & format definitions
-        cards = CardDataGenerator._generate_cards(self.title, self.rank, relevant_sections)
+        cards = CardDataGenerator._generate_cards(self.title, self.pos, self.rank, relevant_sections)
 
         return cards
 
@@ -134,7 +134,7 @@ class CardDataGenerator(xml.sax.ContentHandler):
             .replace(')', ')</span>')
 
     @staticmethod
-    def _generate_cards(src_word: str, word_rank: int, subsections: List[wtp.Section]) -> List[Card]:
+    def _generate_cards(src_word: str, pos: str, word_rank: int, subsections: List[wtp.Section]) -> List[Card]:
         """
         Extract relevant definitions from a part-of-speech section and format
         them appropriately for further processing.
@@ -159,7 +159,8 @@ class CardDataGenerator(xml.sax.ContentHandler):
             finalized_items = [ CardDataGenerator._add_parenthesed_styling(cleaned_item) for cleaned_item in cleaned_items ]
 
             # Generate Card
-            entries.append(Card(src_word, pos_section.title, word_rank, finalized_items))
+            true_rank = word_rank if pos_section.title.lower() == pos.lower() else 1_000_000 + word_rank
+            entries.append(Card(src_word, pos_section.title, true_rank, finalized_items))
 
         return entries
 
