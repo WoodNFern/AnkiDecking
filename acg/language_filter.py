@@ -64,7 +64,7 @@ class LanguageFilter(xml.sax.ContentHandler):
         self.output_file.write("  </entry>\n")
 
     def _should_append_word(self):
-        is_in_target_language = self.language_marker in self.text[:200]
+        is_in_target_language = self.language_marker in self.text
         is_no_category_page = not ":" in self.title
         is_original_page = self.title != self.title.title()
         should_take_all = not self.frequency_list
